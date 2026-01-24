@@ -49,7 +49,7 @@ class Graph:
 
         # init arbitrary starting node s, a set of explored nodes, and the MST
         s = 0                                       # start exploring from node 0
-        explored = {}                               # set of visited explored nodes (just s for now)
+        explored = set()                            # set of visited explored nodes (just s for now)
         mst = np.zeros_like(self.adj_mat)           # the current mst
 
         # init list min_cost to track the cheapest known edge between node v and explored nodes.
@@ -76,8 +76,8 @@ class Graph:
             if u in explored:
                 continue
 
-            # add node u to the explored list
-            explored.append(u)
+            # add node u to the explored set
+            explored.add(u)
 
             # as long as this is not the first iteration, update the edges in the mst
             if pred != None:
