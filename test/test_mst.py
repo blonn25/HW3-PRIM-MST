@@ -71,4 +71,10 @@ def test_mst_student():
     TODO: Write at least one unit test for MST construction.
     
     """
-    pass
+    
+    # assert that a ValueError is thrown when an mst cannot be constructed because
+    # the graph is not connected
+    file_path = './data/small_disconnected.csv'
+    g = Graph(file_path)
+    with pytest.raises(ValueError):
+        g.construct_mst()
