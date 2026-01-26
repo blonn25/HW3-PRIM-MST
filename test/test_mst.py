@@ -35,6 +35,13 @@ def check_mst(adj_mat: np.ndarray,
             total += mst[i, j]
     assert approx_equal(total, expected_weight), 'Proposed MST has incorrect expected weight'
 
+    # assert that the MST consists of exactly V-1 edges
+    num_edges = np.sum(mst > 0) // 2 
+    assert num_edges == adj_mat.shape[0] - 1, f'Proposed MST has incorrect number of edges (has {num_edges}, but should have {adj_mat.shape[0] - 1} edges)'
+
+    # assert that the MST is connected (all cols sum to values greater than 0)
+    assert np.all(mst.sum(axis=0) > 0), f'Proposed MST is not connected'
+
 
 def test_mst_small():
     """
@@ -72,8 +79,13 @@ def test_mst_student():
     
     """
     
-    # assert that a ValueError is thrown when an mst cannot be constructed because
-    # the graph is not connected
+    # assert that a ValueError is thrown when one attempts to construct an MST for an empty graph
+    empty_mat = np.array([])
+    g_empty = Graph(empty_mat)
+    with pytest.raises(ValueError):
+        g_empty.construct_mst()
+
+    # assert that a ValueError is thrown when one attempts to construct an MST for a disconnected graph
     file_path = './data/small_disconnected.csv'
     g = Graph(file_path)
     with pytest.raises(ValueError):

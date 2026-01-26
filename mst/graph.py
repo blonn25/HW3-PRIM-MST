@@ -42,7 +42,11 @@ class Graph:
 
         """
 
-        # check if the tree is connected; if not, throw an error
+        # check if the graph is empty; if so, throw an error
+        if self.adj_mat.size == 0:
+            raise ValueError("This graph is empty (does not contain any nodes).")
+
+        # check if the graph is connected; if not, throw an error
         # this will happen if any node has no connections (a row/col that sums to 0)
         if np.any(self.adj_mat.sum(axis=0) == 0):
             raise ValueError("This graph is not connected. No minimum spanning tree exists.")
@@ -102,4 +106,5 @@ class Graph:
                     pred[v] = u
                     heapq.heappush(pq, (edge_cost, v))
 
+        # store the built mst
         self.mst = mst
