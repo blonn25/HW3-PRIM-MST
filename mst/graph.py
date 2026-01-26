@@ -84,7 +84,7 @@ class Graph:
             explored.add(u)
 
             # as long as this is not the first iteration, update the edges in the mst
-            if pred != None:
+            if pred[u] != None:
                 mst[u, pred[u]] = cost          # connect u to its predecessor already in the mst
                 mst[pred[u], u] = cost          # also update symmetric edge in adj matrix
 
