@@ -72,21 +72,42 @@ def test_mst_single_cell_data():
     check_mst(g.adj_mat, g.mst, 57.263561605571695)
 
 
-def test_mst_student():
+def test_mst_type_student():
     """
-    
     TODO: Write at least one unit test for MST construction.
     
+    Unit test for the attempted construction of an MST with incorrect type input
+    """
+    
+    # assert that a TypeError is thrown when attempting to build a graph object with the
+    # wrong data type as input
+    with pytest.raises(TypeError, match='Input must be a valid path or an adjacency matrix'):
+        _ = Graph(123)
+
+
+def test_mst_empty_student():
+    """
+    TODO: Write at least one unit test for MST construction.
+    
+    Unit test for the attempted construction of an MST on an empty adjacency matrix
     """
     
     # assert that a ValueError is thrown when one attempts to construct an MST for an empty graph
     empty_mat = np.array([])
     g_empty = Graph(empty_mat)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="This graph is empty and does not contain any nodes."):
         g_empty.construct_mst()
 
-    # assert that a ValueError is thrown when one attempts to construct an MST for a disconnected graph
+
+def test_mst_disconnected_student():
+    """
+    TODO: Write at least one unit test for MST construction.
+
+    Unit test for the attempted construction of an MST on a disconnected graph
+    """
+    
+    # assert that a ValueError is thrown when one attempts to construct an MST for a graph where one node has no edges
     file_path = './data/small_disconnected.csv'
     g = Graph(file_path)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="There is at least one node with no edges. No minimum spanning tree exists."):
         g.construct_mst()

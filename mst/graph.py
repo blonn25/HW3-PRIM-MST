@@ -44,12 +44,12 @@ class Graph:
 
         # check if the graph is empty; if so, throw an error
         if self.adj_mat.size == 0:
-            raise ValueError("This graph is empty (does not contain any nodes).")
+            raise ValueError("This graph is empty and does not contain any nodes.")
 
-        # check if the graph is connected; if not, throw an error
+        # check if any nodes have no edges; if so, throw an error
         # this will happen if any node has no connections (a row/col that sums to 0)
         if np.any(self.adj_mat.sum(axis=0) == 0):
-            raise ValueError("This graph is not connected. No minimum spanning tree exists.")
+            raise ValueError("There is at least one node with no edges. No minimum spanning tree exists.")
 
         # init arbitrary starting node s, a set of explored nodes, and the MST
         s = 0                                       # start exploring from node 0
