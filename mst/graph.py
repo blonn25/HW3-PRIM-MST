@@ -24,6 +24,35 @@ class Graph:
     def _load_adjacency_matrix_from_csv(self, path: str) -> np.ndarray:
         with open(path) as f:
             return np.loadtxt(f, delimiter=',')
+        
+    def connected(self):
+        """
+        Check if a graph is connected given its adjacency matrix by performing a depth first search
+        """
+
+        # track visited nodes and start at node 0
+        n = len(self.adj_mat)
+        visited = set()
+        stack = [0]
+        
+        # perform DFS traversal
+        while stack:
+
+            # look at the node on the top of the stack and check if it's been visited.
+            # if not, add it to the visited set
+            node = stack.pop()
+            if node in visited:
+                continue
+            visited.add(node)
+            
+            # for all nodes in the graph, check if it's a neighbor of the curent node,
+            # if so, add the neighbor to stack if not previously visited
+            for neighbor in range(n):
+                if self.adj_mat[node, neighbor] != 0 and neighbor not in visited:
+                    stack.append(neighbor)
+        
+        # return true if all nodes were visited (means graph is connected)
+        return len(visited) == n
 
     def construct_mst(self):
         """
@@ -46,10 +75,9 @@ class Graph:
         if self.adj_mat.size == 0:
             raise ValueError("This graph is empty and does not contain any nodes.")
 
-        # check if any nodes have no edges; if so, throw an error
-        # this will happen if any node has no connections (a row/col that sums to 0)
-        if np.any(self.adj_mat.sum(axis=0) == 0):
-            raise ValueError("There is at least one node with no edges. No minimum spanning tree exists.")
+        # check if the graph is disconnected; if so, throw an error
+        if not self.connected():
+            raise ValueError("This graph is disconnected. No minimum spanning tree exists.")
 
         # init arbitrary starting node s, a set of explored nodes, and the MST
         s = 0                                       # start exploring from node 0

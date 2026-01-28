@@ -39,8 +39,12 @@ def check_mst(adj_mat: np.ndarray,
     num_edges = np.sum(mst > 0) // 2 
     assert num_edges == adj_mat.shape[0] - 1, f'Proposed MST has incorrect number of edges (has {num_edges}, but should have {adj_mat.shape[0] - 1} edges)'
 
-    # assert that the MST is connected (all cols sum to values greater than 0)
-    assert np.all(mst.sum(axis=0) > 0), f'Proposed MST is not connected'
+    # assert symmetry of the MST across the diagonal
+    assert np.all(mst - mst.T < allowed_error)
+
+    # build the MST as a Graph object and assert that the MST is connected
+    g_mst = Graph(mst)
+    assert g_mst.connected() == True, f'Proposed MST is not connected'
 
 
 def test_mst_small():
@@ -109,5 +113,5 @@ def test_mst_disconnected_student():
     # assert that a ValueError is thrown when one attempts to construct an MST for a graph where one node has no edges
     file_path = './data/small_disconnected.csv'
     g = Graph(file_path)
-    with pytest.raises(ValueError, match="There is at least one node with no edges. No minimum spanning tree exists."):
+    with pytest.raises(ValueError, match="This graph is disconnected. No minimum spanning tree exists."):
         g.construct_mst()
