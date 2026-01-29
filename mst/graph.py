@@ -79,6 +79,10 @@ class Graph:
         if self.adj_mat.size == 0:
             raise ValueError("This graph is empty and does not contain any nodes.")
 
+        # check if the matrix is not square, if so, throw an error
+        if self.adj_mat.shape[0] != self.adj_mat.shape[1]:
+            raise ValueError("This is not a valid graph. Graph adjacency matrix is not square.")
+
         # check if the graph is disconnected; if so, throw an error
         if not self.connected():
             raise ValueError("This graph is disconnected. No minimum spanning tree exists.")

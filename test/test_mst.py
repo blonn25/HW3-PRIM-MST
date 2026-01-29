@@ -104,6 +104,22 @@ def test_mst_empty_student():
         g_empty.construct_mst()
 
 
+def test_mst_nonsquare_student():
+    """
+    TODO: Write at least one unit test for MST construction.
+    
+    Unit test for the attempted construction of an MST on a non-square adjacency matrix
+    """
+    
+    # assert that a ValueError is thrown when one attempts to construct an MST from an invalid
+    # adjacency matrix (not square)
+    nonsquare_mat = np.array([[0, 1, 2,],
+                          [1, 0, 4]])
+    g_ns = Graph(nonsquare_mat)
+    with pytest.raises(ValueError, match="This is not a valid graph. Graph adjacency matrix is not square."):
+        g_ns.construct_mst()
+
+
 def test_mst_disconnected_student():
     """
     TODO: Write at least one unit test for MST construction.
