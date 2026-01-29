@@ -28,6 +28,8 @@ class Graph:
     def connected(self):
         """
         Check if a graph is connected given its adjacency matrix by performing a depth first search
+
+        Returns: True if the graph stored in self.adj_mat is connected and False if not
         """
 
         # track visited nodes and start at node 0
@@ -35,7 +37,7 @@ class Graph:
         visited = set()
         stack = [0]
         
-        # perform DFS traversal
+        # perform DFS traversal to 
         while stack:
 
             # look at the node on the top of the stack and check if it's been visited.
@@ -69,6 +71,8 @@ class Graph:
         use of priority queues in your implementation. Refer to the heapq module, particularly the 
         `heapify`, `heappop`, and `heappush` functions.
 
+        Identifies the minimum spanning tree (MST) for a connected graph stored in self.adj_mat.
+        Identified MST is saved to self.mst
         """
 
         # check if the graph is empty; if so, throw an error

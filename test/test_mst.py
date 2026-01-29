@@ -42,7 +42,8 @@ def check_mst(adj_mat: np.ndarray,
     # assert symmetry of the MST across the diagonal
     assert np.all(mst - mst.T < allowed_error)
 
-    # build the MST as a Graph object and assert that the MST is connected
+    # build the MST as a Graph object and assert that the MST is connected (use built in connected
+    # method added to the Graph object)
     g_mst = Graph(mst)
     assert g_mst.connected() == True, f'Proposed MST is not connected'
 
@@ -80,7 +81,7 @@ def test_mst_type_student():
     """
     TODO: Write at least one unit test for MST construction.
     
-    Unit test for the attempted construction of an MST with incorrect type input
+    Unit test for the attempted construction of a graph with incorrect data type
     """
     
     # assert that a TypeError is thrown when attempting to build a graph object with the
