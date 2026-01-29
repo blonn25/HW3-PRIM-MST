@@ -40,7 +40,7 @@ def check_mst(adj_mat: np.ndarray,
     assert num_edges == adj_mat.shape[0] - 1, f'Proposed MST has incorrect number of edges (has {num_edges}, but should have {adj_mat.shape[0] - 1} edges)'
 
     # assert symmetry of the MST across the diagonal
-    assert np.all(mst - mst.T < allowed_error)
+    assert np.all(np.abs(mst - mst.T) < allowed_error)
 
     # build the MST as a Graph object and assert that the MST is connected (use built in connected
     # method added to the Graph object)
